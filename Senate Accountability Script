@@ -1,6 +1,7 @@
 const TIMEZONE = "America/Chicago";
 
 const RECIPIENT = [
+  "jdharris7@cougars.ccis.edu",
   "meredith_happy@alsobrooks.senate.gov",
   "press@baldwin.senate.gov",
   "sophie_ulin@bennet.senate.gov",
@@ -197,36 +198,79 @@ It represents ordinary Americans who want a government that works for them. It s
 Please support a new direction.`
 ];
 
-function sendHourlyEmail() {
-  const properties = PropertiesService.getScriptProperties();
-  const count = Number(properties.getProperty("emailCount") || 0);
+const MAX_EMAILS = 480;
 
-  if (count >= MAX_EMAILS) {
-    stopHourlyEmails();
+function sendHourlyEmaiL() {
+  const properties = PropertiesService.getScriptProperties();
+  let totalSent = Number(properties.getProperty("messageIndex") || 0);
+  const batchNumber = Math.floor(totalSent / RECIPIENT.length);
+
+  if (totalSent >= MAX_EMAILS) {
+    Logger.log("Reached MAX_EMAILS (" + MAX_EMAILS + "). Stopping triggers.");
+    stopCampaigN();
     return;
   }
 
-  GmailApp.sendEmail(RECIPIENT, SUBJECT, MESSAGE);
+  for (let i = 0; i < RECIPIENT.length; i++) {
+    if (totalSent >= MAX_EMAILS) {
+      break;
+    }
 
-  properties.setProperty("emailCount", String(count + 1));
+    const recipient = RECIPIENT[i];
+    // Rotate subject & message across both recipients and hours
+    const subject = SUBJECT[(i + batchNumber) % SUBJECT.length];
+    const body = MESSAGE[(i + batchNumber) % MESSAGE.length];
+
+    GmailApp.sendEmail(recipient, subject, body);
+    totalSent++;
+    Utilities.sleep(500); // Half-second pause between sends to prevent rate-limiting
+  }
+
+  properties.setProperty("messageIndex", String(totalSent));
+  Logger.log("Hourly batch complete. Total emails sent so far: " + totalSent + " / " + MAX_EMAILS);
+
+  if (totalSent < MAX_EMAILS) {
+    scheduleNextTopOfHour();
+  } else {
+    Logger.log("Campaign finished! Reached MAX_EMAILS.");
+    stopCampaigN();
+  }
 }
 
-function startHourlyEmails() {
-  stopHourlyEmails();
+function scheduleNextTopOfHour() {
+  stopCampaigN(); // Remove previous one-off trigger
 
-  PropertiesService.getScriptProperties()
-    .setProperty("emailCount", "0");
+  const now = new Date();
+  const nextHour = new Date(now);
+  nextHour.setHours(now.getHours() + 1, 0, 0, 0); // Lock to the exact :00:00 mark
 
-  ScriptApp.newTrigger("sendHourlyEmail")
+  ScriptApp.newTrigger("sendHourlyEmaiL")
     .timeBased()
-    .everyHours(1)
+    .at(nextHour)
     .create();
+
+  Logger.log("Next batch scheduled for: " + nextHour.toString());
 }
 
-function stopHourlyEmails() {
+function startCampaigN() {
+  stopCampaigN();
+  PropertiesService.getScriptProperties().setProperty("messageIndex", "0");
+
+  // Sends Batch 1 immediately and schedules the rest on the hour (:00).
+  // To wait until the next :00 before sending Batch 1, replace sendHourlyEmaiL() below with scheduleNextTopOfHour().
+  sendHourlyEmaiL();
+}
+
+function stopCampaigN() {
   ScriptApp.getProjectTriggers().forEach(trigger => {
-    if (trigger.getHandlerFunction() === "sendHourlyEmail") {
+    if (trigger.getHandlerFunction() === "sendHourlyEmaiL") {
       ScriptApp.deleteTrigger(trigger);
     }
   });
+  Logger.log("Campaign triggers stopped.");
+}
+
+function checkStatus() {
+  const count = PropertiesService.getScriptProperties().getProperty("messageIndex") || "0";
+  Logger.log("Total Emails Sent: " + count + " / " + MAX_EMAILS);
 }
