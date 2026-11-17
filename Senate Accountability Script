@@ -1,0 +1,232 @@
+const TIMEZONE = "America/Chicago";
+
+const RECIPIENT = [
+  "meredith_happy@alsobrooks.senate.gov",
+  "press@baldwin.senate.gov",
+  "sophie_ulin@bennet.senate.gov",
+  "maria_mcelwain@blumenthal.senate.gov",
+  "sean_ryan@bluntrochester.senate.gov",
+  "david_bergstein@booker.senate.gov",
+  "ansley_lacitis@cantwell.senate.gov",
+  "will_baskin-gerwitz@coons.senate.gov",
+  "lauren_wodarski@cortezmasto.senate.gov",
+  "celia_olivas@duckworth.senate.gov",
+  "emily_hampsten@durbin.senate.gov",
+  "tkani_finau@fetterman.senate.gov",
+  "jacques_petit@gallego.senate.gov",
+  "james_singer@gillibrand.senate.gov",
+  "sahil_mehrotra@hassan.senate.gov",
+  "caty_payette@heinrich.senate.gov",
+  "michael_judson@hickenlooper.senate.gov",
+  "george_flynn@hirono.senate.gov",
+  "janine_kritschgau@kaine.senate.gov",
+  "jacob_peters@kelly.senate.gov",
+  "tim_mack@kim.senate.gov",
+  "matthew_felling@king.senate.gov",
+  "james_adams@klobuchar.senate.gov",
+  "press@lujan.senate.gov",
+  "abigail_goldring@markey.senate.gov",
+  "Maggie_Sunstrum@merkley.senate.gov",
+  "josh_sorbe@murphy.senate.gov",
+  "amir_avin@murray.senate.gov",
+  "jake_best@ossoff.senate.gov",
+  "jackie_mcguinness@padilla.senate.gov",
+  "media@peters.senate.gov",
+  "chip_unruh@reed.senate.gov",
+  "renzo_olivari@rosen.senate.gov",
+  "press@sanders.senate.gov",
+  "michael_inacay@schatz.senate.gov",
+  "ian_mariani@schiff.senate.gov",
+  "allison_biasotti@schumer.senate.gov",
+  "brendan_duff@shaheen.senate.gov",
+  "josh_stewart@slotkin.senate.gov",
+  "charlotte_hoffman@smith.senate.gov",
+  "francesca_amodeo@vanhollen.senate.gov",
+  "rachel_cohen@warner.senate.gov",
+  "elena_radding@warnock.senate.gov",
+  "yael_sheinfeld@warren.senate.gov",
+  "aaron_ahlstrand-white@welch.senate.gov",
+  "meaghan_mccabe@whitehouse.senate.gov",
+  "Emily_Zahnle-Hostetler@wyden.senate.gov"
+];
+
+const SUBJECT = [
+  "Democratic Leadership Must Change",
+  "A Call for New Senate Leadership",
+  "Voters Deserve Accountability",
+  "It Is Time for a New Direction",
+  "The Democratic Party Needs Change",
+  "Leadership Is Earned, Not Guaranteed",
+  "We Need Leaders Who Will Fight",
+  "A Message from a Concerned Democrat",
+  "The Status Quo Is Not Working",
+  "A New Generation of Leadership",
+  "Our Party Must Listen to Voters",
+  "Demanding Accountability from Leadership",
+  "The Future of the Democratic Party",
+  "We Cannot Keep Doing the Same Thing",
+  "Time to Put the People First",
+  "Democrats Deserve Better Leadership",
+  "A Renewed Commitment to Voters",
+  "Leadership Must Reflect Our Values",
+  "The Time for Change Is Now",
+  "Please Listen to Your Constituents"
+];
+
+const MESSAGE = [
+  `I am writing as a concerned Democrat who believes our party needs a serious change in leadership.
+
+I do not believe continuing with the same leadership structure is the answer. Chuck Schumer and the current leadership have a responsibility to demonstrate that they can effectively represent voters and deliver results.
+
+I am asking you to support new leadership and a direction that puts working Americans, accountability, and meaningful progress first.
+
+The Democratic Party cannot afford to ignore the people it represents.`,
+
+  `The Democratic Party needs leadership that is willing to fight for its values and stand up for the people who put it in office.
+
+I believe it is time for a new direction in Senate leadership. Continuing with the same approach while expecting different results is not a strategy.
+
+Please take seriously the growing calls for change and support fresh leadership.`,
+
+  `I am tired of watching Democratic voters ask for stronger leadership without seeing meaningful change.
+
+Our party needs leaders who communicate clearly, stand firm, and demonstrate that they understand what voters are asking for.
+
+I am asking you to reconsider the current leadership arrangement and support a new direction.`,
+
+  `This is not about abandoning the Democratic Party. It is about wanting the party to succeed.
+
+I believe Democrats need leadership that inspires confidence, builds trust, and fights consistently for the people they represent.
+
+Please consider supporting new leadership rather than continuing with the status quo.`,
+
+  `Voters should not have to settle for leadership simply because it is familiar.
+
+The Democratic Party needs to evaluate its direction honestly. I believe new leadership could bring renewed energy, accountability, and a stronger connection with voters.
+
+Please listen to those calling for change.`,
+
+  `I want a Democratic Party that is proactive instead of reactive.
+
+We need leadership that communicates a clear vision and is willing to fight for it. I do not believe continuing with the same leadership is the best path forward.
+
+Please support a new direction in Senate leadership.`,
+
+  `Democratic voters deserve leadership that reflects their concerns and priorities.
+
+I am asking you to take a hard look at the current leadership structure and consider whether it is delivering the results our party needs.
+
+Change is not disloyalty. It is accountability.`,
+
+  `The party cannot rebuild trust without being willing to examine its own leadership.
+
+I believe it is time to move beyond the current leadership arrangement and give new voices an opportunity to lead.
+
+Please consider the future of the party and the voters who depend on it.`,
+
+  `I am asking for leadership that is willing to meet this moment.
+
+Our country faces serious challenges, and Democrats need a clear, confident, and effective strategy.
+
+I believe a change in leadership is an important step toward rebuilding confidence among Democratic voters.`,
+
+  `The status quo is not automatically the safest choice.
+
+Sometimes leadership means recognizing when it is time to step aside and allow someone else to take responsibility.
+
+Please support a new direction for Senate Democratic leadership.`,
+
+  `I want Democrats to compete, communicate, and deliver.
+
+That requires leadership that understands the frustration of voters and is willing to make changes when the current approach is not working.
+
+Please take the demand for new leadership seriously.`,
+
+  `Our party should not confuse loyalty with silence.
+
+I can support Democratic values while also demanding accountability from Democratic leadership.
+
+I believe it is time for a change and ask you to consider supporting new leadership.`,
+
+  `The future of the Democratic Party depends on its willingness to listen.
+
+Voters are asking for a stronger direction, more accountability, and leadership that reflects the urgency of this moment.
+
+Please do not dismiss those concerns.`,
+
+  `I believe the Democratic Party needs a leadership reset.
+
+We need people who can communicate effectively, organize strategically, and earn the confidence of voters.
+
+Please consider supporting new leadership rather than continuing with the current arrangement.`,
+
+  `This message comes from someone who wants the Democratic Party to succeed.
+
+I believe we can do better, and I believe that starts with leadership willing to recognize when change is necessary.
+
+Please listen to Democratic voters calling for a new direction.`,
+
+  `The people who vote for Democrats deserve more than explanations for why things cannot change.
+
+They deserve leadership that takes responsibility, develops a strategy, and delivers results.
+
+I am asking you to support a new direction in Senate leadership.`,
+
+  `We cannot rebuild confidence by defending every decision made by current leadership.
+
+Accountability matters, and so does recognizing when a different approach is needed.
+
+Please consider supporting new leadership for the Democratic caucus.`,
+
+  `I want to see a Democratic Party that is bold, organized, and responsive to its voters.
+
+That starts with leadership willing to evaluate its performance honestly.
+
+Please consider whether a new generation of leadership is what our party needs.`,
+
+  `Democratic voters are not asking for perfection. They are asking for leadership that listens, communicates, and fights for them.
+
+I believe a leadership change is worth serious consideration.
+
+Please take this request seriously.`,
+
+  `I am asking you to remember who this party represents.
+
+It represents ordinary Americans who want a government that works for them. It should also have leadership willing to hear criticism and respond to calls for change.
+
+Please support a new direction.`
+];
+
+function sendHourlyEmail() {
+  const properties = PropertiesService.getScriptProperties();
+  const count = Number(properties.getProperty("emailCount") || 0);
+
+  if (count >= MAX_EMAILS) {
+    stopHourlyEmails();
+    return;
+  }
+
+  GmailApp.sendEmail(RECIPIENT, SUBJECT, MESSAGE);
+
+  properties.setProperty("emailCount", String(count + 1));
+}
+
+function startHourlyEmails() {
+  stopHourlyEmails();
+
+  PropertiesService.getScriptProperties()
+    .setProperty("emailCount", "0");
+
+  ScriptApp.newTrigger("sendHourlyEmail")
+    .timeBased()
+    .everyHours(1)
+    .create();
+}
+
+function stopHourlyEmails() {
+  ScriptApp.getProjectTriggers().forEach(trigger => {
+    if (trigger.getHandlerFunction() === "sendHourlyEmail") {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+}
