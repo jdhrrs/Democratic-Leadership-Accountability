@@ -210,3 +210,23 @@ Technology should empower citizens to make their voices heard, not drown out eve
 ---
 
 *Created and maintained by Justin Harris.*
+
+
+MIT License
+
+Copyright (c) 2026 Justin Harris
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software with limited restriction, including with limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense,
+and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software. The software will not be used maliciously,
+or with nefarious intentions. 
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
