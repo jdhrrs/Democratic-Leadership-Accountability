@@ -1,4 +1,4 @@
-# Congressional Accountability Email Scripts
+# Congressional Accountability Email Scripts Version 1.0
 
 Automated Google Apps Script tools designed to send scheduled, rotating advocacy messages to U.S. Senate and U.S. House of Representatives offices on an hourly basis.
 
