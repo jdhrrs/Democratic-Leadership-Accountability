@@ -1,0 +1,125 @@
+
+/********************************************************
+ HOUSE DEMOCRATIC LEADERSHIP CAMPAIGN
+ Hourly email schedule
+********************************************************/
+
+const RECIPIENTS = [
+  "Caucus.HelpDesk@mail.house.gov",
+  "Sonali.Desai@mail.house.gov",
+  "DemocraticCaucusPress@mail.house.gov", 
+   "jdharris7@cougars.ccis.edu", 
+   "larrymh78@gmail.com"
+];
+
+const SUBJECTS = [
+  "We Will Not Accept Jeffries in Leadership",
+  "Democratic Voters Are Demanding New Leadership",
+  "Our Party Needs Accountability and Change"
+];
+
+const MESSAGES = [
+
+`To House Democratic Leadership,
+
+We do not want Hakeem Jeffries continuing as our leader. Democrats across the country are frustrated with the status quo, and we are demanding accountability, a new direction, and leadership willing to actually fight for its voters.
+
+Stop assuming you have our unconditional support simply because we are Democrats. Our loyalty must be earned, not expected.
+
+If the party refuses to listen, I am prepared to walk away. I will not continue supporting a party that ignores the voices of its own members.
+
+We want new leadership. We will not simply fall in line.
+
+Sincerely,
+A Frustrated Democratic Voter`,
+
+`To the House Democratic Caucus,
+
+How many times must Democratic voters express their dissatisfaction before someone listens?
+
+We do not want Hakeem Jeffries continuing in leadership. We want change, accountability, and leaders willing to fight for the people they represent.
+
+This frustration is being expressed by Democrats across the country. Please do not mistake party loyalty for unconditional support.
+
+If the party refuses to listen, it risks losing the support of voters like me.
+
+We demand better.
+
+Sincerely,
+A Frustrated Democratic Voter`,
+
+`To Democratic House Leadership,
+
+This is another reminder that voters are demanding a change in leadership.
+
+We are not interested in more of the same. We want new voices, new direction, and accountability.
+
+Democrats cannot keep asking voters to show up, donate, volunteer, and defend the party while disregarding their concerns.
+
+My support is not guaranteed. If leadership refuses to listen, I am prepared to leave the party.
+
+Listen to your voters.
+
+Sincerely,
+A Frustrated Democratic Voter`
+
+];
+
+/********************************************************
+ SEND ONE EMAIL
+********************************************************/
+
+function sendHourlyEmail() {
+  const properties = PropertiesService.getScriptProperties();
+
+  const index = Number(
+    properties.getProperty("messageIndex") || 0
+  );
+
+  const subject = SUBJECTS[index];
+  const message = MESSAGES[index];
+
+  GmailApp.sendEmail(
+    RECIPIENTS.join(","),
+    subject,
+    message
+  );
+
+  properties.setProperty(
+    "messageIndex",
+    String((index + 1) % MESSAGES.length)
+  );
+}
+
+/********************************************************
+ START HOURLY SCHEDULE
+********************************************************/
+
+function startCampaign() {
+
+  stopCampaign();
+
+  ScriptApp.newTrigger("sendHourlyEmail")
+    .timeBased()
+    .everyHours(1)
+    .create();
+
+}
+
+/********************************************************
+ STOP AUTOMATED SENDING
+********************************************************/
+
+function stopCampaign() {
+
+  ScriptApp.getProjectTriggers().forEach(trigger => {
+
+    if (
+      trigger.getHandlerFunction() === "sendHourlyEmail"
+    ) {
+      ScriptApp.deleteTrigger(trigger);
+    }
+
+  });
+
+}
